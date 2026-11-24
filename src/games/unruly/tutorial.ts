@@ -12,17 +12,20 @@ export interface UnrulyHint {
 }
 
 /**
- * The tutorial puzzle (1 black, 0 white, · empty), with a unique solution
- * that the Easy techniques find once the guided steps are done:
+ * The tutorial puzzle (1 black, 0 white, · empty). Most squares are given,
+ * so that a first-time player isn't left with a hard puzzle: after the
+ * guided steps only six squares are left, and each follows straight from
+ * an idea just taught (a full row or column, or between two of a colour),
+ * with no chains of reasoning.
  *
- *     · · 0 · 0 ·      step 1: the square between the two whites is black
+ *     · 1 0 · 0 0      step 1: the square between the two whites is black
  *     0 · 1 · 1 1      step 4: three blacks already, so the rest are white
- *     · · · 1 · ·
- *     0 · 0 · · ·
- *     1 1 · 0 · ·      steps 2 and 3: black here makes three in a row
- *     · · · 1 · 1
+ *     1 0 1 · · 0
+ *     0 1 0 0 1 ·
+ *     1 1 · · 1 0      steps 2 and 3: black here makes three in a row
+ *     0 0 1 1 0 ·
  */
-const DESCRIPTION = 'cbbBBADcbDAbFBa';
+const DESCRIPTION = 'BabaaBBAAaAcaAaaABACaaaAAab';
 
 /** Between two whites: black. */
 const BETWEEN: Point = { x: 3, y: 0 };
@@ -83,7 +86,9 @@ export const unrulyTutorial: Tutorial<UnrulyParams, UnrulyState, UnrulyMove, Unr
       done: (state) => REST_OF_ROW.every((p) => valueAt(state, p) === ZERO),
     },
     {
-      text: 'Now finish the puzzle yourself.',
+      text:
+        'Now finish the puzzle yourself. Each empty square follows from one of the ideas you’ve ' +
+        'just seen.',
       done: (state) => state.completed,
     },
   ],
