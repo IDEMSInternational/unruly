@@ -15,8 +15,9 @@ column has as many black squares as white ones.
   small ones sure; **Discard** empties them.
 - **Show mistakes** outlines three of a colour side by side in red, and marks
   with "!" the squares of a colour that a row or column has too many of.
-- Sizes 6×6 to 14×14, or a custom size up to 16×16 (even sizes only), at
-  Easy, Medium and Hard (the original's Trivial, Easy and Normal).
+- Sizes 6×6 to 14×14, or a custom size up to 16×16, at Easy, Medium and
+  Hard (the original's Trivial, Easy and Normal). Sizes must be even: an odd
+  custom size is turned down with a message.
 - An interactive tutorial on first launch (and from the **?** button).
 - Puzzles are generated on the device; the generator and solver are exact
   ports of the original, so a game ID such as `8x8dt#123456789012345` gives
