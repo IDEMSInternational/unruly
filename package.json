@@ -1,0 +1,46 @@
+{
+  "name": "unruly",
+  "version": "0.1.0",
+  "description": "Unruly: an IDEMS educational puzzle game (Angular + Capacitor).",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "apk": "node tools/build-apk.mjs",
+    "aab": "node tools/build-aab.mjs",
+    "version": "node games-common-core/ios-release/ios-version.mjs && git add ios/App/App.xcodeproj/project.pbxproj",
+    "app-images": "capacitor-assets generate --android --ios --assetPath assets/app --iconBackgroundColor #fffdf8 --iconBackgroundColorDark #fffdf8 --splashBackgroundColor #f6f3ed --splashBackgroundColorDark #f6f3ed"
+  },
+  "private": true,
+  "packageManager": "npm@11.19.1",
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.0",
+    "@capacitor/ios": "^8.6.0",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/share": "^8.0.3",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.27",
+    "@angular/cli": "^21.2.27",
+    "@angular/compiler-cli": "^21.2.0",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.6.0",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
