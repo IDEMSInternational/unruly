@@ -1,0 +1,82 @@
+@let s = state();
+@let v = view();
+
+<svg
+  class="board-svg"
+  #svg
+  role="img"
+  [attr.aria-label]="'Unruly puzzle, ' + s.w + ' by ' + s.h"
+  [attr.viewBox]="viewBox()"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="cancelTouch()"
+  (contextmenu)="$event.preventDefault()"
+>
+  <rect class="board-paper" x="0" y="0" [attr.width]="s.w" [attr.height]="s.h" rx="0.2" />
+
+  @for (q of v.squares; track $index) {
+    <g class="square" [class]="q.colour" [class.given]="q.given" [class.tentative]="q.tentative">
+      <!-- A tentative colour is a smaller tile on an empty square. -->
+      @if (q.tentative) {
+        <rect
+          class="tile empty"
+          [attr.x]="q.x + gap"
+          [attr.y]="q.y + gap"
+          [attr.width]="1 - 2 * gap"
+          [attr.height]="1 - 2 * gap"
+          rx="0.12"
+        />
+      }
+      @let inset = q.tentative ? tentativeInset : gap;
+      <rect
+        class="tile"
+        [attr.x]="q.x + inset"
+        [attr.y]="q.y + inset"
+        [attr.width]="1 - 2 * inset"
+        [attr.height]="1 - 2 * inset"
+        [attr.rx]="q.tentative ? 0.08 : 0.12"
+      />
+      @if (q.given) {
+        <rect
+          class="given-edge"
+          [attr.x]="q.x + givenInset"
+          [attr.y]="q.y + givenInset"
+          [attr.width]="1 - 2 * givenInset"
+          [attr.height]="1 - 2 * givenInset"
+          rx="0.06"
+        />
+      }
+      @if (q.overfull) {
+        <text class="overfull" [attr.x]="q.x + 0.5" [attr.y]="q.y + 0.54">!</text>
+      }
+    </g>
+  }
+
+  @for (r of v.runs; track $index) {
+    <rect
+      class="run"
+      [attr.x]="r.x + 0.08"
+      [attr.y]="r.y + 0.08"
+      [attr.width]="r.w - 0.16"
+      [attr.height]="r.h - 0.16"
+      rx="0.18"
+    />
+  }
+
+  @if (hintView(); as h) {
+    <rect
+      class="board-hint"
+      [attr.x]="h.square.x + 0.07"
+      [attr.y]="h.square.y + 0.07"
+      width="0.86"
+      height="0.86"
+      rx="0.15"
+    />
+    <g boardFinger [at]="h.tap" />
+  }
+
+  @if (noteLabel(); as label) {
+    <g boardLabel class="note" role="status" [label]="label" />
+  }
+</svg>

@@ -9,7 +9,12 @@ colour may be next to each other in a row or column, and every row and
 column has as many black squares as white ones.
 
 - Tap a square to make it black, tap again for white, and once more to
-  empty it.
+  empty it. Given squares have a thin inner border and can't be changed.
+- **Thinking** mode, to try out a hypothesis: squares coloured while it's on
+  are drawn smaller, while sure ones can't be changed. **Keep** makes the
+  small ones sure; **Discard** empties them.
+- **Show mistakes** outlines three of a colour side by side in red, and marks
+  with "!" the squares of a colour that a row or column has too many of.
 - Sizes 6×6 to 14×14, or a custom size up to 16×16 (even sizes only), at
   Easy, Medium and Hard (the original's Trivial, Easy and Normal).
 - An interactive tutorial on first launch (and from the **?** button).
@@ -17,7 +22,7 @@ column has as many black squares as white ones.
   ports of the original, so a game ID such as `8x8dt#123456789012345` gives
   the same puzzle as the original collection.
 
-Work in progress: the game itself is being ported.
+Work in progress: the app icon and the store listings are still to come.
 
 Built with Angular and Capacitor, for Android and iOS.
 
