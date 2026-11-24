@@ -36,7 +36,8 @@ export function encodeDescription(squares: ArrayLike<number>): string {
 export function validateDescription(area: number, text: string): string | null {
   let pos = 0;
   for (const c of text) {
-    if ((c >= 'a' && c < 'z') || (c >= 'A' && c < 'Z')) pos += 1 + (c.toLowerCase().charCodeAt(0) - 97);
+    if ((c >= 'a' && c < 'z') || (c >= 'A' && c < 'Z'))
+      pos += 1 + (c.toLowerCase().charCodeAt(0) - 97);
     else if (c === 'z' || c === 'Z') pos += 25;
     else return 'Description contains invalid characters';
   }

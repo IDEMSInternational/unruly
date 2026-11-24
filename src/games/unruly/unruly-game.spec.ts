@@ -8,7 +8,15 @@ import {
   validateDescription,
 } from './description';
 import { applyMove } from './moves';
-import { EASY, HARD, MEDIUM, customParams, decodeParams, encodeParams, validateParams } from './params';
+import {
+  EASY,
+  HARD,
+  MEDIUM,
+  customParams,
+  decodeParams,
+  encodeParams,
+  validateParams,
+} from './params';
 import { UnrulyState, findMistakes, isSolved } from './state';
 import { unrulyGame } from './unruly-game';
 
@@ -81,7 +89,9 @@ describe('Unruly rules', () => {
   });
 
   it('flags every square of a colour a line has too many of', () => {
-    const { runs, overfull } = findMistakes(stateOf('11011.', '......', '......', '......', '......', '......'));
+    const { runs, overfull } = findMistakes(
+      stateOf('11011.', '......', '......', '......', '......', '......'),
+    );
     expect(runs).toEqual([]);
     expect([...overfull]).toEqual([0, 1, 3, 4]);
   });
