@@ -22,7 +22,7 @@ column has as many black squares as white ones.
   ports of the original, so a game ID such as `8x8dt#123456789012345` gives
   the same puzzle as the original collection.
 
-Work in progress: the app icon and the store listings are still to come.
+Work in progress: the store listings are still to come.
 
 Built with Angular and Capacitor, for Android and iOS.
 
