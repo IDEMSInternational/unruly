@@ -10,12 +10,12 @@ column has as many black squares as white ones.
 
 - Tap a square to make it black, tap again for white, and once more to
   empty it.
-- Sizes 6×6 to 14×14 at Easy, Medium and Hard (the original's Trivial, Easy
-  and Normal).
+- Sizes 6×6 to 14×14, or a custom size up to 16×16 (even sizes only), at
+  Easy, Medium and Hard (the original's Trivial, Easy and Normal).
 - An interactive tutorial on first launch (and from the **?** button).
-- Puzzles are generated on the device; the generator is an exact port of
-  the original, so a game ID such as `8x8dt#123456789012345` gives the same
-  puzzle as the original collection.
+- Puzzles are generated on the device; the generator and solver are exact
+  ports of the original, so a game ID such as `8x8dt#123456789012345` gives
+  the same puzzle as the original collection.
 
 Work in progress: the game itself is being ported.
 
@@ -38,7 +38,7 @@ Run `npm install` here only, never inside `games-common-core`.
 
 ```sh
 npm start              # dev server at http://localhost:4200
-npm test               # unit tests, including puzzles checked against the original
+npm test               # unit tests, including 840 puzzles checked against the original
 npm run build          # production web build
 npm run apk            # Android debug APK -> Unruly.apk
 npm run aab            # Android release bundle for Google Play -> Unruly.aab
