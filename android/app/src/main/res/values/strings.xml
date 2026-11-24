@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Unruly</string>
+    <string name="title_activity_main">Unruly</string>
+    <string name="package_name">international.idems.games.unruly</string>
+    <string name="custom_url_scheme">international.idems.games.unruly</string>
+</resources>
