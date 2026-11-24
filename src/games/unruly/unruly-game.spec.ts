@@ -54,8 +54,12 @@ describe('Unruly params', () => {
     expect(validateParams(decodeParams('8x8udn'))).toMatch(/Unique/);
   });
 
-  it('rounds an odd custom size down to an even one', () => {
-    expect(customParams({ w: 9, h: 12 })).toEqual({ w: 8, h: 12, difficulty: EASY });
+  it('turns down an odd custom size, with a message for the player', () => {
+    expect(customParams({ w: 10, h: 12 })).toEqual({ w: 10, h: 12, difficulty: EASY });
+    expect(validateParams(customParams({ w: 10, h: 12 }))).toBeNull();
+    expect(validateParams(customParams({ w: 9, h: 12 }))).toBe(
+      'Width and height must both be even',
+    );
   });
 });
 

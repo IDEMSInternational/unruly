@@ -45,10 +45,13 @@ export function customFields(params: UnrulyParams): CustomField[] {
   ];
 }
 
-/** Custom settings: an odd side is rounded down to the even size below. */
+/**
+ * Custom settings, as the player entered them: an odd side is turned down
+ * by validateParams ("Width and height must both be even"), and the app
+ * shows that message so the player can choose again.
+ */
 export function customParams(values: Readonly<Record<string, number>>): UnrulyParams {
-  const even = (n: number) => Math.max(MIN_SIDE, n - (n % 2));
-  return { w: even(values['w']), h: even(values['h']), difficulty: EASY };
+  return { w: values['w'], h: values['h'], difficulty: EASY };
 }
 
 /**
