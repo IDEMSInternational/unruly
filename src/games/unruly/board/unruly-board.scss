@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  width: 100%;
+
+  /*
+   * Black and white squares, as in the original; an empty square is a mid
+   * grey, so it stands apart from both. No reds or oranges, which are kept
+   * for "Show mistakes" and the app's buttons.
+   */
+  --square-empty: #d4d0c8;
+  --square-black: #2b2d33;
+  --square-white: #ffffff;
+  --square-white-edge: #b9b4aa;
+  /* A given square's thin inner border, on black and on white. */
+  --given-on-black: #8a8d95;
+  --given-on-white: #a29d93;
+}
+
+/* The dark theme: the same three tones, a little softer. */
+:host-context([data-theme='dark']) {
+  --square-empty: #4a4d54;
+  --square-black: #0f1012;
+  --square-white: #e6e3dd;
+  --square-white-edge: #e6e3dd;
+  --given-on-black: #6b6e76;
+  --given-on-white: #8f8b84;
+}
+
+.square {
+  pointer-events: none;
+
+  .tile {
+    fill: var(--square-empty);
+  }
+
+  &.black .tile:not(.empty) {
+    fill: var(--square-black);
+  }
+
+  &.white .tile:not(.empty) {
+    fill: var(--square-white);
+    stroke: var(--square-white-edge);
+    stroke-width: 0.03;
+  }
+
+  .given-edge {
+    fill: none;
+    stroke-width: 0.04;
+  }
+
+  &.black .given-edge {
+    stroke: var(--given-on-black);
+  }
+
+  &.white .given-edge {
+    stroke: var(--given-on-white);
+  }
+
+  /* "Show mistakes": a colour this square's row or column has too many of. */
+  .overfull {
+    font-size: 0.55px;
+    font-weight: 800;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    fill: var(--danger);
+  }
+}
+
+/* "Show mistakes": three of the same colour side by side. */
+.run {
+  fill: none;
+  stroke: var(--danger);
+  stroke-width: 0.08;
+  pointer-events: none;
+}

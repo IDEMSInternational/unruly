@@ -1,0 +1,11 @@
+.thinking {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+
+  puzzle-switch {
+    margin-right: 4px;
+  }
+}
