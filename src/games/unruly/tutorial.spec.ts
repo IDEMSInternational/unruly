@@ -44,8 +44,9 @@ describe('Unruly tutorial', () => {
     expect(set(3, 1, ZERO)).toBe('step-done');
     expect(run.next()).toBe(true);
 
-    // 5: finish freely.
+    // 5: finish freely, with only a few squares left.
     expect(run.hint).toBeUndefined();
+    expect(run.state.cells.filter((c) => c === 0).length).toBe(6);
     const solution = solvePuzzle(run.state, run.state.givens)!;
     let result = '';
     for (let i = 0; i < 36; i++) {
