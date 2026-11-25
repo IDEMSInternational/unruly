@@ -8,8 +8,11 @@ Fill the grid with black and white squares. No three squares of the same
 colour may be next to each other in a row or column, and every row and
 column has as many black squares as white ones.
 
-- Tap a square to make it black, tap again for white, and once more to
-  empty it. Given squares have a thin inner border and can't be changed.
+- Pick black or white in the palette under the board, then tap a square to
+  give it that colour; tapping a square that already has it empties it. Or
+  swipe: up for black, down for white, whatever is picked (the palette's
+  arrows show which). Given squares have a thin inner border and can't be
+  changed.
 - **Thinking** mode, to try out a hypothesis: squares coloured while it's on
   are drawn smaller, while sure ones can't be changed. **Keep** makes the
   small ones sure; **Discard** empties them.

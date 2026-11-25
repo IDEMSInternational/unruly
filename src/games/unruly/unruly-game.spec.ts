@@ -8,7 +8,7 @@ import {
   validateDescription,
 } from './description';
 import { UnrulyTouch } from './input';
-import { applyMove } from './moves';
+import { UnrulyMove, applyMove } from './moves';
 import {
   EASY,
   HARD,
@@ -155,49 +155,66 @@ describe('Unruly moves', () => {
   });
 });
 
-/** The tutorial puzzle, for the tap tests. */
+/** The tutorial puzzle, for the tap and swipe tests: (1, 0) is empty, (0, 0) a given black. */
 const tutorialStart = unrulyGame.newGame(unrulyTutorial.params, unrulyTutorial.description);
 
-/** A tap at the middle of square (x, y). */
-function tap(state: UnrulyState, x: number, y: number, thinking = false) {
-  const touch = new UnrulyTouch(state, { x: x + 0.5, y: y + 0.5 }, { thinking });
-  touch.moveTo({ x: x + 0.6, y: y + 0.4 }); // a little finger jitter
-  return touch.finish();
+/** A touch on square (x, y) that moves by (dx, dy) squares, with this colour picked. */
+function touch(
+  state: UnrulyState,
+  x: number,
+  y: number,
+  { dx = 0, dy = 0, picked = ONE, thinking = false } = {},
+) {
+  const t = new UnrulyTouch(state, { x: x + 0.5, y: y + 0.5 }, { picked, thinking });
+  t.moveTo({ x: x + 0.5 + dx, y: y + 0.5 + dy });
+  return t;
 }
+const tap = (state: UnrulyState, picked = ONE, thinking = false) =>
+  touch(state, 1, 0, { dx: 0.05, dy: -0.05, picked, thinking }).finish(); // a little finger jitter
+const swipe = (state: UnrulyState, dy: number, dx = 0) => touch(state, 1, 0, { dx, dy }).finish();
+const play = (state: UnrulyState, move: UnrulyMove | null) => applyMove(state, move!)!;
 
-describe('Unruly taps', () => {
-  it('cycle a square: empty, black, white, empty', () => {
-    let state = tutorialStart;
-    const values: number[] = [];
-    for (let i = 0; i < 3; i++) {
-      state = applyMove(state, tap(state, 0, 0)!)!;
-      values.push(state.cells[0]);
-    }
-    expect(values).toEqual([ONE, ZERO, EMPTY]);
+describe('Unruly taps and swipes', () => {
+  it('tap: the picked colour, a change to it, or emptied if it already has it', () => {
+    const black = play(tutorialStart, tap(tutorialStart));
+    expect(black.cells[1]).toBe(ONE);
+    const white = play(black, tap(black, ZERO)); // white picked: changes it
+    expect(white.cells[1]).toBe(ZERO);
+    expect(play(white, tap(white, ZERO)).cells[1]).toBe(EMPTY); // white again: emptied
   });
 
-  it('leave given squares alone', () => {
-    expect(tap(tutorialStart, 2, 0)).toBeNull(); // a given white
+  it('swipe: up for black, down for white, whatever is picked', () => {
+    const black = play(tutorialStart, swipe(tutorialStart, -0.4));
+    expect(black.cells[1]).toBe(ONE);
+    const white = play(black, swipe(black, 0.4));
+    expect(white.cells[1]).toBe(ZERO);
+    expect(swipe(white, 0.4)).toBeNull(); // already white: nothing
   });
 
-  it('do nothing if the finger slides off the square', () => {
-    const touch = new UnrulyTouch(tutorialStart, { x: 0.5, y: 0.5 });
-    touch.moveTo({ x: 1.5, y: 0.5 });
-    touch.moveTo({ x: 0.5, y: 0.5 });
-    expect(touch.finish()).toBeNull();
+  it('ignores sideways swipes, and cancels a swipe that comes back near the start', () => {
+    expect(swipe(tutorialStart, 0.1, 0.4)).toBeNull();
+    const t = touch(tutorialStart, 1, 0, { dy: 0.4 });
+    expect(t.swipeColour).toBe(ZERO);
+    t.moveTo({ x: 1.55, y: 0.55 });
+    expect([t.isSwipe, t.swipeColour, t.finish()]).toEqual([true, null, null]);
   });
 
-  it('in thinking mode, make tentative squares and leave sure ones alone', () => {
-    const thought = applyMove(tutorialStart, tap(tutorialStart, 0, 0, true)!)!;
-    expect([thought.cells[0], thought.tentative[0]]).toEqual([ONE, 1]);
-    expect(tap(thought, 0, 0, true)).toEqual({
+  it('leaves given squares alone, and touches that start off the grid', () => {
+    expect(touch(tutorialStart, 0, 0).finish()).toBeNull(); // a given black
+    expect(new UnrulyTouch(tutorialStart, { x: 1.5, y: 6.3 }).finish()).toBeNull();
+  });
+
+  it('in thinking mode, makes tentative squares and leaves sure ones alone', () => {
+    const thought = play(tutorialStart, tap(tutorialStart, ONE, true));
+    expect([thought.cells[1], thought.tentative[1]]).toEqual([ONE, 1]);
+    expect(tap(thought, ZERO, true)).toEqual({
       kind: 'set',
-      at: { x: 0, y: 0 },
+      at: { x: 1, y: 0 },
       value: ZERO,
       tentative: true,
     });
 
-    const sure = applyMove(tutorialStart, tap(tutorialStart, 0, 0)!)!;
-    expect(tap(sure, 0, 0, true)).toBeNull();
+    const sure = play(tutorialStart, tap(tutorialStart));
+    expect(tap(sure, ZERO, true)).toBeNull();
   });
 });
