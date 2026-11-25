@@ -1,6 +1,6 @@
 {
   "name": "unruly",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unruly: an IDEMS educational puzzle game (Angular + Capacitor).",
   "license": "MIT",
   "scripts": {
