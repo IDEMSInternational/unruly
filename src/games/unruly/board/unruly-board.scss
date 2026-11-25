@@ -73,3 +73,43 @@
   stroke-width: 0.08;
   pointer-events: none;
 }
+
+/* A swipe in progress: the colour the square is about to get. */
+.preview {
+  pointer-events: none;
+  opacity: 0.8;
+
+  &.black {
+    fill: var(--square-black);
+  }
+
+  &.white {
+    fill: var(--square-white);
+    stroke: var(--square-white-edge);
+    stroke-width: 0.03;
+  }
+}
+
+/* The palette's colours (drawn in a 1 × 1 square), each with its swipe's arrow. */
+.swatch {
+  fill: var(--square-white);
+  stroke: var(--square-white-edge);
+  stroke-width: 0.04;
+
+  &.black {
+    fill: var(--square-black);
+    stroke: none;
+  }
+}
+
+.arrow {
+  fill: none;
+  stroke: var(--square-black);
+  stroke-width: 0.07;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  &.black {
+    stroke: var(--square-white);
+  }
+}

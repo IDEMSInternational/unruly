@@ -62,4 +62,28 @@ describe('App', () => {
     await fixture.whenStable();
     expect(element.querySelector('unruly-board .square.tentative')).toBeNull();
   });
+
+  it('has a palette under the board, black or white, remembered on the device', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance as unknown as {
+      screens: { endTutorial(): void; openFreePlay(): void };
+    };
+    app.screens.endTutorial();
+    app.screens.openFreePlay();
+    await fixture.whenStable();
+    const element = fixture.nativeElement as HTMLElement;
+    const choices = () =>
+      Array.from(element.querySelectorAll('unruly-board .board-palette .choice'));
+
+    expect(choices().map((c) => c.getAttribute('aria-label'))).toEqual([
+      'Black (or swipe up)',
+      'White (or swipe down)',
+    ]);
+    expect(choices().map((c) => c.getAttribute('aria-checked'))).toEqual(['true', 'false']);
+
+    choices()[1].dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    await fixture.whenStable();
+    expect(choices().map((c) => c.getAttribute('aria-checked'))).toEqual(['false', 'true']);
+    expect(localStorage.getItem('unruly.colour')).toBe('2');
+  });
 });

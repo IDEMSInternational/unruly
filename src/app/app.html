@@ -6,7 +6,12 @@
   @let s = screens;
   @if (s.tutorial(); as t) {
     <puzzle-tutorial [controls]="t" (skip)="s.endTutorial()">
-      <unruly-board [state]="t.state()" [hint]="t.hint()" (move)="t.move($event)" />
+      <unruly-board
+        [state]="t.state()"
+        [hint]="t.hint()"
+        [(colour)]="tutorialColour"
+        (move)="t.move($event)"
+      />
     </puzzle-tutorial>
   } @else if (s.play(); as play) {
     <puzzle-shell [controls]="play" (back)="s.goHome()" (help)="s.startTutorial()">
@@ -14,6 +19,7 @@
         [state]="play.state()"
         [thinking]="thinking()"
         [showMistakes]="play.showMistakes()"
+        [(colour)]="colour"
         (move)="play.move($event)"
       />
 
